@@ -7,9 +7,10 @@
 
     if(isset($_POST["query"])) {
         $output = '';
-        $query = "select CONCAT(street_num, ' ', street_name, ' ,' , city, ' ,', state) as result
+        $query = "
+        select CONCAT(street_num, ' ', street_name, ' ,' , city, ' ,', state) as result
         from address natural join blocks_info natural join hoods
-        where street_num LIKE '%".$_POST["query"]."%'";
+        where street_num LIKE '%".$_POST["query"]."%' ";
 
         $result = mysqli_query($connect, $query);
         $output .= '<ul class = "list-unstyled">'; 
