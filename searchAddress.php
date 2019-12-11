@@ -1,26 +1,21 @@
-<?php
+<?php  
+    include("includes/config.php");
 
-
-    $connect = mysqli_connect("localhost", "root", "", "final");
-
-
-
+    // get the value from input to verify auto-complete
     if(isset($_POST["query"])) {
         $output = '';
-        $query = "
-        select CONCAT(street_num, ' ', street_name, ' ,' , city, ' ,', state) as result
+        // update : fix the query 
+        $query = "select CONCAT(street_num, ' ', street_name, ', ' , city, ', ', state) as result
         from address natural join blocks_info natural join hoods
         where street_num LIKE '%".$_POST["query"]."%' ";
 
-        $result = mysqli_query($connect, $query);
-        $output .= '<ul class = "list-unstyled">'; 
-      
+        
+        $result = mysqli_query($con, $query);  
+        $output = '<ul class="list-unstyled">';  
         if (mysqli_num_rows($result) > 0 ){
             while($row = mysqli_fetch_array($result)){
-                $output .= '<li> '.$row["result"].'</li>';
-
+                $output .= '<li>'.$row["result"].'</li>';
             }
-
         }
 
         else{
@@ -29,7 +24,6 @@
 
         $output .= "</ul>";
         echo $output;
-
     }
    
     
